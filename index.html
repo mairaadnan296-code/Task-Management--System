@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Task Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==========================================
+         AUTHENTICATION
+    =========================================== -->
+
+    <div id="authSection" class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="auth-logo">
+                <span>✓</span>
+            </div>
+
+            <h1>Smart Task Manager</h1>
+
+            <p class="subtitle">
+                Organize your work. Track your progress. Get things done.
+            </p>
+
+
+            <!-- LOGIN -->
+
+            <div id="loginForm">
+
+                <h2>Welcome Back</h2>
+
+                <p class="form-subtitle">
+                    Login to manage your tasks
+                </p>
+
+                <div class="form-field">
+
+                    <label for="loginEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter your email"
+                    >
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter your password"
+                    >
+
+                </div>
+
+
+                <button
+                    class="primary-btn auth-btn"
+                    onclick="loginUser()"
+                >
+                    Login
+                </button>
+
+
+                <p class="switch-auth">
+
+                    Don't have an account?
+
+                    <button
+                        class="link-button"
+                        onclick="showRegister()"
+                    >
+                        Create Account
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <!-- REGISTER -->
+
+            <div
+                id="registerForm"
+                style="display: none;"
+            >
+
+                <h2>Create Account</h2>
+
+                <p class="form-subtitle">
+                    Start managing your tasks today
+                </p>
+
+
+                <div class="form-field">
+
+                    <label for="registerName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registerName"
+                        placeholder="Enter your full name"
+                    >
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="registerEmail">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        placeholder="Enter your email"
+                    >
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="registerPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Create a password"
+                    >
+
+                </div>
+
+
+                <button
+                    class="primary-btn auth-btn"
+                    onclick="registerUser()"
+                >
+                    Create Account
+                </button>
+
+
+                <p class="switch-auth">
+
+                    Already have an account?
+
+                    <button
+                        class="link-button"
+                        onclick="showLogin()"
+                    >
+                        Login
+                    </button>
+
+                </p>
+
+            </div>
+
+
+            <p id="authMessage"></p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         DASHBOARD
+    =========================================== -->
+
+    <div
+        id="dashboardSection"
+        style="display: none;"
+    >
+
+
+        <!-- TOP NAVBAR -->
+
+        <header class="top-header">
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <h1>
+                        Smart Task Manager
+                    </h1>
+
+                    <p>
+                        Stay organized and productive
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-actions">
+
+                <div class="user-info">
+
+                    <span class="user-label">
+                        Logged in as
+                    </span>
+
+                    <strong id="welcomeUser">
+                        User
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="logout-btn"
+                    onclick="logoutUser()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- MAIN DASHBOARD -->
+
+        <main class="dashboard-container">
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome-section">
+
+                <div>
+
+                    <h2>
+                        Dashboard
+                    </h2>
+
+                    <p>
+                        Here's an overview of your tasks and progress.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 STATISTICS
+            =========================================== -->
+
+            <section class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon total-icon">
+                        #
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Tasks
+                        </span>
+
+                        <h3 id="totalTasks">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon progress-icon">
+                        ↗
+                    </div>
+
+                    <div>
+
+                        <span>
+                            In Progress
+                        </span>
+
+                        <h3 id="pendingTasks">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon completed-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completed
+                        </span>
+
+                        <h3 id="completedTasks">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon overdue-icon">
+                        !
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Overdue
+                        </span>
+
+                        <h3 id="overdueTasks">
+                            0
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon percentage-icon">
+                        %
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Completion Rate
+                        </span>
+
+                        <h3 id="completionPercentage">
+                            0%
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 ADD NEW TASK
+            =========================================== -->
+
+            <section class="task-form-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>
+                            Create New Task
+                        </h2>
+
+                        <p>
+                            Add a task and keep track of your progress.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="task-form">
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-field">
+
+                        <label for="title">
+                            Task Title
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder="Enter task title"
+                        >
+
+                    </div>
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="form-field">
+
+                        <label for="category">
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            id="category"
+                            placeholder="e.g. Development"
+                        >
+
+                    </div>
+
+
+                    <!-- PRIORITY -->
+
+                    <div class="form-field">
+
+                        <label for="priority">
+                            Priority
+                        </label>
+
+                        <select id="priority">
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option
+                                value="Medium"
+                                selected
+                            >
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DUE DATE -->
+
+                    <div class="form-field">
+
+                        <label for="dueDate">
+                            Due Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dueDate"
+                        >
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-field full-width">
+
+                        <label for="description">
+                            Task Description
+                        </label>
+
+                        <textarea
+                            id="description"
+                            rows="4"
+                            placeholder="Describe what needs to be done..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- INITIAL PROGRESS -->
+
+                    <div class="form-field full-width">
+
+                        <label for="progressNotes">
+                            Progress Update
+                        </label>
+
+                        <textarea
+                            id="progressNotes"
+                            rows="3"
+                            placeholder="What have you completed so far? What is still remaining?"
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="form-field">
+
+                        <label for="status">
+                            Status
+                        </label>
+
+                        <select id="status">
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <div class="form-button-container">
+
+                        <button
+                            class="primary-btn add-task-btn"
+                            onclick="addTask()"
+                        >
+                            + Create Task
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <p id="taskMessage"></p>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 TASKS
+            =========================================== -->
+
+            <section class="tasks-section">
+
+
+                <div class="tasks-header">
+
+                    <div>
+
+                        <h2>
+                            My Tasks
+                        </h2>
+
+                        <p>
+                            Manage and track all your tasks.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="secondary-btn"
+                        onclick="loadTasks()"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+
+                <!-- SEARCH + FILTERS -->
+
+                <div class="task-filters">
+
+
+                    <div class="search-box">
+
+                        <input
+                            type="text"
+                            id="searchTasks"
+                            placeholder="Search tasks..."
+                            oninput="filterTasks()"
+                        >
+
+                    </div>
+
+
+                    <select
+                        id="statusFilter"
+                        onchange="filterTasks()"
+                    >
+
+                        <option value="All">
+                            All Status
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                        <option value="Overdue">
+                            Overdue
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="priorityFilter"
+                        onchange="filterTasks()"
+                    >
+
+                        <option value="All">
+                            All Priorities
+                        </option>
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+
+                    <select
+                        id="categoryFilter"
+                        onchange="filterTasks()"
+                    >
+
+                        <option value="All">
+                            All Categories
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TASK LIST -->
+
+                <div id="taskList">
+
+                    <div class="empty-message">
+
+                        <h3>
+                            No tasks yet
+                        </h3>
+
+                        <p>
+                            Create your first task to get started.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ==========================================
+                 UPCOMING DEADLINES
+            =========================================== -->
+
+            <section class="upcoming-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h2>
+                            Upcoming Deadlines
+                        </h2>
+
+                        <p>
+                            Keep an eye on your upcoming tasks.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="upcomingTasks">
+
+                    <p class="empty-message">
+                        No upcoming deadlines.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ==========================================
+         PROGRESS UPDATE MODAL
+    =========================================== -->
+
+    <div
+        id="progressModal"
+        class="modal"
+        style="display: none;"
+    >
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        Update Task Progress
+                    </h2>
+
+                    <p>
+                        Record what you have completed and what remains.
+                    </p>
+
+                </div>
+
+                <button
+                    class="close-modal"
+                    onclick="closeProgressModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="progressStatus">
+                    Status
+                </label>
+
+                <select id="progressStatus">
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="progressPercentage">
+                    Progress
+                </label>
+
+                <input
+                    type="number"
+                    id="progressPercentage"
+                    min="0"
+                    max="100"
+                    value="0"
+                    placeholder="0 - 100"
+                >
+
+            </div>
+
+
+            <div class="form-field">
+
+                <label for="progressUpdate">
+                    Progress Update
+                </label>
+
+                <textarea
+                    id="progressUpdate"
+                    rows="5"
+                    placeholder="Write what you completed, what is remaining, and your next steps..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="secondary-btn"
+                    onclick="closeProgressModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    class="primary-btn"
+                    onclick="saveProgressUpdate()"
+                >
+                    Save Progress
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+</body>
+
+</html>
